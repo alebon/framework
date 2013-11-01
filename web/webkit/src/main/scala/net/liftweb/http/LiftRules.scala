@@ -1528,6 +1528,11 @@ class LiftRules() extends Factory with FormVendor with LazyLoggable {
   @volatile var autoIncludeComet: LiftSession => Boolean = session => true
 
   /**
+   * Tells Lift if the Comet JavaScript location ID should be included. By default it is set to false.
+   */
+  @volatile var autoIncludeCometId: LiftSession => Boolean = session => false
+
+  /**
    * Tells Lift if the Ajax JavaScript should be included. By default it is set to true.
    */
   @deprecated("Use autoIncludeAjaxCalc", "2.4")

@@ -23,6 +23,9 @@ import net.liftweb.util._
 import net.liftweb.common._
 import net.liftweb.http.js._
 import Helpers._
+import net.liftweb.http.js.JE.JsVar
+import sun.jvm.hotspot.utilities.soql.JSJavaScriptEngine
+import net.liftweb.http.js.JsCmds.JsCrVar
 
 
 private[http] trait LiftMerge {
@@ -197,6 +200,7 @@ private[http] trait LiftMerge {
 
       // Appends comet stript reference to head
       if (!cometList.isEmpty && LiftRules.autoIncludeComet(this)) {
+
         bodyChildren +=
                 <script src={S.encodeURL(contextPath + "/" +
                         LiftRules.cometPath +
@@ -204,6 +208,11 @@ private[http] trait LiftMerge {
                         "/" + LiftRules.cometScriptName())}
                 type="text/javascript"/>
         bodyChildren += nl
+      }
+
+      // Appends session id to head
+      if (!cometList.isEmpty && LiftRules.autoIncludeCometId(this)) {
+        headChildren += js.JsCmds.Script(JsCrVar("cometSessionId", this.uniqueId))
       }
 
       S.jsToAppend match {
